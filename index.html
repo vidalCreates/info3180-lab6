@@ -9,11 +9,22 @@
 			app.controller("myCtrl", function($scope) {
 				$scope.products = ["Milk", "Bread", "Cheese"];
 				$scope.addItem = function () {
-			        $scope.products.push($scope.item);
-			    }
-			    $scope.removeItem = function (x) {
-			        $scope.products.splice(x, 1);
-			    }
+					$scope.errormessage = "";
+				    if (!$scope.item) {
+				    	$scope.errormessage = "Please type the new item name above.";
+				    	return;
+				    }
+				    if ($scope.products.indexOf($scope.item) == -1) {
+				        $scope.products.push($scope.item);
+				    } 
+				    else
+				    {
+				        $scope.errormessage = "Item already exists.";
+					}
+				}
+				$scope.removeItem = function (x) {
+					$scope.products.splice(x, 1);
+				}
 			});
 		</script>
 
@@ -27,6 +38,7 @@
 
 		    <input ng-model="item">
 		    <button ng-click="addItem()">Add</button>
+		    <p>{{errormessage}}</p>
 		</div>
 
 		
